@@ -1,0 +1,104 @@
+{
+  "editor.inlineSuggest.enabled": true,
+  "editor.formatOnSave": false,
+  "editor.accessibilitySupport": "off",
+  "editor.fontFamily": "Monaspace Neon, Monaco, 'Courier New', monospace",
+  "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08'",
+  "editor.fontWeight": "200",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "never"
+  },
+  "editor.renderWhitespace": "none",
+  "editor.tabSize": 2,
+
+
+  "window.zoomLevel": -1,
+
+  
+  "workbench.iconTheme": "keen-neutral-icon-theme",
+  "workbench.colorTheme": "Catppuccin Frappé",
+  "workbench.productIconTheme": "material-product-icons",
+
+
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "redhat.telemetry.enabled": false,
+
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false
+  },
+
+  "prettier.enable": false,
+
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.rules.customizations": [
+    { "rule": "style/*", "severity": "off" },
+    { "rule": "*-indent", "severity": "off" },
+    { "rule": "*-spacing", "severity": "off" },
+    { "rule": "*-spaces", "severity": "off" },
+    { "rule": "*-order", "severity": "off" },
+    { "rule": "*-dangle", "severity": "off" },
+    { "rule": "*-newline", "severity": "off" },
+    { "rule": "*quotes", "severity": "off" },
+    { "rule": "*semi", "severity": "off" }
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml"
+  ],
+  
+  "sortJSON.excludedFiles": [
+    "package.json"
+  ],
+
+  "vue.codeActions.savingTimeLimit": 2000,
+
+
+  "[xslt]": {
+    "editor.semanticHighlighting.enabled": true
+  },
+  "XSLT.tasks.saxonJar": "/opt/homebrew/opt/saxon/libexec/saxon-he-12.5.jar",
+
+
+  "git.autofetch": true,
+
+
+  "remote.SSH.useLocalServer": false,
+  "remote.SSH.remotePlatform": {
+    "HOMESERVER": "linux",
+    "OXALIS": "linux",
+    "DEVSERVER": "linux"
+  },
+
+  
+  "i18n-ally.pathMatcher": "{locale}.json",
+  "i18n-ally.sourceLanguage": "en-GB",
+  "i18n-ally.displayLanguage": "en-GB",
+  "i18n-ally.enabledFrameworks": [
+    "vue"
+  ],
+
+
+  "cSpell.userWords": [
+    "Monaspace",
+    "HOMESERVER",
+    "DEVSERVER"
+  ],
+  
+  "files.associations": {
+    "*.xsl": "xsl"
+  }
+}

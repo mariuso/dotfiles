@@ -1,0 +1,55 @@
+# SSH Configuration Template
+# Copy to ~/.ssh/config and customize with your server details
+
+# Global SSH configuration
+Host *
+    # Use 1Password SSH agent for key management
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    
+    # Security and performance settings
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    TCPKeepAlive yes
+    Compression yes
+    
+    # Disable host key checking for local networks (adjust as needed)
+    # Host 192.168.*
+    #     StrictHostKeyChecking no
+    #     UserKnownHostsFile /dev/null
+
+# Example server configurations
+# Uncomment and modify as needed
+
+# Development Server Example
+# Host dev-server
+#     HostName your-server-ip
+#     Port 22
+#     User your-username
+#     IdentityFile ~/.ssh/id_ed25519
+
+# Production Server Example  
+# Host prod-server
+#     HostName your-production-ip
+#     Port 2244
+#     User your-username
+#     IdentityFile ~/.ssh/id_ed25519
+
+# Local Network Server Example
+# Host local-server
+#     HostName 192.168.1.100
+#     User your-username
+
+# Jump Host Configuration Example
+# Host internal-server
+#     HostName internal-ip
+#     User your-username
+#     ProxyJump jump-host
+
+# GitHub configuration
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+
+# Add your own server configurations below
+# Remember to use 1Password SSH agent or specify IdentityFile paths

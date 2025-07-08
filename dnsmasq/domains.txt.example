@@ -1,0 +1,11 @@
+# dnsmasq custom domains
+# Add one domain per line
+# Lines starting with # are ignored
+
+example.dev
+myapp.local
+api.test
+
+# You can add more domains below:
+# staging.dev
+# backend.local

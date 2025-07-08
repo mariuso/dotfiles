@@ -1,0 +1,85 @@
+#!/bin/bash
+
+echo " Ask for the administrator password for the duration of this script"
+sudo -v
+
+echo " Keep-alive: update existing sudo time stamp until .osx has finished"
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+# Configuration
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DNSMASQ_CONFIG_FILE="$DOTFILES_DIR/dnsmasq/domains.txt"
+DNSMASQ_CONF_FILE=$(brew --prefix)/etc/dnsmasq.conf
+
+# Default domains (always included)
+DEFAULT_DOMAINS=("test")
+
+# Function to setup a domain
+setup_domain() {
+    local domain="$1"
+    
+    # Add to dnsmasq config if not already present
+    if sudo [ $(grep -L "address=/.$domain/127.0.0.1" "$DNSMASQ_CONF_FILE") ]; then
+        echo "address=/.$domain/127.0.0.1" >> "$DNSMASQ_CONF_FILE"
+        echo "Added $domain to dnsmasq configuration"
+    fi
+    
+    # Create resolver file
+    if sudo [ ! -f "/etc/resolver/$domain" ]; then
+        sudo bash -c "echo 'nameserver 127.0.0.1' > /etc/resolver/$domain"
+        echo "Created resolver for $domain"
+    fi
+}
+
+# Create directories if needed
+if sudo [ ! -d "$(brew --prefix)/etc/" ]; then
+    mkdir -pv $(brew --prefix)/etc/
+fi
+
+if sudo [ ! -d /etc/resolver ]; then
+    sudo mkdir -v /etc/resolver
+fi
+
+# Start dnsmasq service
+sudo brew services start dnsmasq
+
+# Setup default domains
+echo "Setting up default domains..."
+for domain in "${DEFAULT_DOMAINS[@]}"; do
+    setup_domain "$domain"
+done
+
+# Setup custom domains from config file if it exists
+if [[ -f "$DNSMASQ_CONFIG_FILE" ]]; then
+    echo "Loading custom domains from config file..."
+    
+    # Read domains from text file (one domain per line)
+    CUSTOM_DOMAINS=()
+    while IFS= read -r domain || [ -n "$domain" ]; do
+        # Trim whitespace and skip empty lines or comments
+        domain=$(echo "$domain" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+        if [[ -n "$domain" && ! "$domain" =~ ^# ]]; then
+            CUSTOM_DOMAINS+=("$domain")
+        fi
+    done < "$DNSMASQ_CONFIG_FILE"
+    
+    if [[ ${#CUSTOM_DOMAINS[@]} -gt 0 ]]; then
+        echo "Found ${#CUSTOM_DOMAINS[@]} custom domains"
+        for domain in "${CUSTOM_DOMAINS[@]}"; do
+            setup_domain "$domain"
+        done
+    else
+        echo "No custom domains found in config file"
+    fi
+else
+    echo "No custom domain configuration found."
+    echo "To add custom domains, copy the example file:"
+    echo "  cp $DOTFILES_DIR/dnsmasq/domains.txt.example $DNSMASQ_CONFIG_FILE"
+    echo "Then edit $DNSMASQ_CONFIG_FILE with your domains"
+fi
+
+# Restart dnsmasq to apply all changes
+echo "Restarting dnsmasq service..."
+sudo brew services restart dnsmasq
+
+echo "dnsmasq setup complete!"

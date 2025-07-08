@@ -1,0 +1,10 @@
+.DS_Store
+BREWFILE
+BREWFILE.lock.json
+BrewfileCurrent
+
+# Exclude the actual dnsmasq.sh file (keep only the template)
+install/dnsmasq.sh
+
+# Exclude custom dnsmasq domains (keep only the example)
+dnsmasq/domains.txt

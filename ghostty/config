@@ -1,0 +1,89 @@
+# Ghostty Terminal Configuration
+# Documentation: https://ghostty.org/docs
+
+# Font Configuration
+font-family = "MesloLGS Nerd Font"
+font-size = 11
+font-feature = calt
+font-feature = liga
+font-feature = dlig
+font-feature = ss01
+font-feature = ss02
+font-feature = ss03
+font-feature = ss04
+font-feature = ss05
+font-feature = ss06
+font-feature = ss07
+font-feature = ss08
+
+# Custom theme to match iTerm2
+background = 121a21
+foreground = e6e1cf
+cursor-color = dcf24e
+
+# ANSI Colors (matching iTerm2)
+palette = 0=#000000
+palette = 1=#ff4d4d
+palette = 2=#c4d372
+palette = 3=#edbb84
+palette = 4=#4080ff
+palette = 5=#f564d0
+palette = 6=#5adbbc
+palette = 7=#ffffff
+palette = 8=#414141
+palette = 9=#ff7575
+palette = 10=#ddf252
+palette = 11=#fff48a
+palette = 12=#78b3ff
+palette = 13=#ffb8f5
+palette = 14=#8ae9d6
+palette = 15=#ffffff
+
+# Window Configuration
+window-padding-x = 10
+window-padding-y = 10
+window-decoration = true
+window-title-font-family = "Monaspace Neon"
+
+# Performance
+auto-update = check
+
+# Shell Integration
+shell-integration = zsh
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Scrollback
+scrollback-limit = 2147483648
+copy-on-select = clipboard
+
+
+auto-update = download
+auto-update-channel = stable
+cursor-style = block
+
+# Background
+background-opacity = 1.0
+
+# Keybindings (macOS style)
+keybind = super+c=copy_to_clipboard
+keybind = super+v=paste_from_clipboard
+keybind = super+t=new_tab
+keybind = super+w=close_surface
+keybind = super+shift+left_bracket=previous_tab
+keybind = super+shift+right_bracket=next_tab
+keybind = super+equal=increase_font_size:1
+keybind = super+minus=decrease_font_size:1
+keybind = super+zero=reset_font_size
+
+# Fix Shift+Enter to send proper newline
+keybind = shift+enter=text:\n
+
+# Terminal Features
+confirm-close-surface = false
+quit-after-last-window-closed = true

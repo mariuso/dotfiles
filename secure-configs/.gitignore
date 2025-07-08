@@ -1,0 +1,13 @@
+# Ignore actual config files - only scripts and documentation are version controlled
+config
+credentials
+*.json
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# But keep the README and scripts
+!README.md
+!*.sh

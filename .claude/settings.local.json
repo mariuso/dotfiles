@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(defaults read:*)",
+      "Bash(brew list:*)",
+      "Bash(rg:*)",
+      "Bash(find:*)"
+    ],
+    "deny": []
+  }
+}
