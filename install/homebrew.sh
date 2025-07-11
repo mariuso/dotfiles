@@ -5,10 +5,12 @@ echo "Start automated brew installer"
 brewInstalls=(
   moreutils
   findutils
+  ripgrep
   gnupg
   grep
   lima
   zsh
+  ztsd
   mise
   bat
   caddy
