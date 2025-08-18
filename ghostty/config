@@ -84,6 +84,12 @@ keybind = super+zero=reset_font_size
 # Fix Shift+Enter to send proper newline
 keybind = shift+enter=text:\n
 
+# Split pane navigation
+keybind = super+left=goto_split:left
+keybind = super+right=goto_split:right
+keybind = super+up=goto_split:top
+keybind = super+down=goto_split:bottom
+
 # Terminal Features
-confirm-close-surface = false
+confirm-close-surface = always
 quit-after-last-window-closed = true

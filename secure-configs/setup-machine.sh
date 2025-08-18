@@ -69,6 +69,12 @@ setup_cloud_configs() {
     info "Attempting to restore cloud configs from 1Password..."
     "$SYNC_SCRIPT" restore || warning "Some configs may not be available in 1Password yet"
     
+    # Process starship gcloud aliases after config restore
+    if [[ -x "$DOTFILES_DIR/starship/process-gcloud-aliases.sh" ]]; then
+        info "Processing GCloud aliases for starship prompt..."
+        "$DOTFILES_DIR/starship/process-gcloud-aliases.sh"
+    fi
+    
     success "✅ Cloud configs setup complete"
 }
 

@@ -23,6 +23,7 @@ CONFIG_MAPPINGS=(
     "$HOME/.terraformrc|Terraform Config"
     "$HOME/.config/op/config|1Password CLI Config"
     "$HOME/.npmrc|NPM Config"
+    "$DOTFILES_DIR/starship/starship_gcloud_aliases.toml.template|Starship GCloud Aliases Template"
 )
 
 # Vault name for storing configs

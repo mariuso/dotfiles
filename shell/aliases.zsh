@@ -55,6 +55,7 @@ alias tfd='terraform destroy'
 # Development tools
 alias vim='nvim'
 alias vi='nvim'
+alias v='nvim'
 alias oldvim='vim'
 alias python='python3'
 alias pip='pip3'

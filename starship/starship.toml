@@ -1,17 +1,52 @@
-add_newline=true
 command_timeout=3000 #ms
 
-right_format = "$kubernetes $gcloud"
+format = """$username$directory$git_branch$cmd_duration\n$nodejs$golang$gcloud$kubernetes
+$character"""
 
-[kubernetes]
-format = '[$symbol$context( \($namespace\))](dimmed $style)'
+[username]
+show_always = true
+style_user = "bg:#83a598 fg:#282828"
+style_root = "bg:#83a598 fg:#282828"
+format = '[ $user ]($style)'
+
+[directory]
+truncation_length = 5
+style = "bg:#b8bb26 fg:#282828"
+format = "[ $path ]($style)"
+
+[git_branch]
+style = "bg:#fabd2f fg:#282828"
+format = "[ $symbol$branch ]($style)"
+symbol = " "
+
+[cmd_duration]
+min_time = 500
+style = "bg:#d3869b fg:#282828"
+format = "[ took $duration ]($style)"
 
 [gcloud]
-symbol = ""
-format = 'gcloud [$symbol$account(@$domain)(\($region\)):(\($project\))]($style) '
+symbol = "☁️ "
+style = "bg:#fb4934 fg:#282828"
+format = '[ $symbol$account/$project ]($style)'
 
-[aws]
-disabled = true
+[gcloud.project_aliases]
+"my-company-project-prod" = "prod"
+[kubernetes]
+style = "bg:#fe8019 fg:#282828"
+format = '[ $symbol$context( \($namespace\)) ]($style)'
+
+[golang]
+symbol = " "
+style = "bg:#83a598 fg:#282828"
+format = "[ $symbol($version) ]($style)"
+
+[nodejs]
+symbol = " "
+style = "bg:#8ec07c fg:#282828"
+format = "[ $symbol($version) ]($style)"
+
+[python]
+symbol = " "
 
 [battery]
 full_symbol = "🔋 "
@@ -24,46 +59,5 @@ style = 'bold red'
 
 [character]
 format = "❯❯ "
-success_symbol = "❯❯(bold green) "
-error_symbol = "❯❯(bold red) "
-
-[directory]
-truncation_length = 5
-format = "[$path]($style)[$lock_symbol]($lock_style) "
-
-[git_status]
-disabled = true
-
-[hostname]
-ssh_only = true
-format = "<[$hostname]($style)>"
-trim_at = "-"
-style = "bold dimmed white"
-disabled = false
-
-[time]
-time_format = "%H:%M"
-format = "$time($style) "
-style = "bright-white"
-disabled = true
-
-[username]
-style_user = "bold dimmed blue"
-show_always = true
-
-[git_branch]
-format = " [$symbol$branch]($style) "
-symbol = " "
-style = "bold yellow"
-
-[rust]
-symbol = " "
-
-[python]
-symbol = " "
-
-[nodejs]
-symbol = " "
-
-[docker_context]
-symbol = " "
+success_symbol = "[❯❯](bold green) "
+error_symbol = "[❯❯](bold red) "
