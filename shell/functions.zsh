@@ -136,7 +136,7 @@ duh() {
 serve() {
     local port="${1:-8000}"
     echo "Serving current directory on http://localhost:$port"
-    python3 -m http.server "$port"
+    python3 -m http.server --bind 127.0.0.1 "$port"
 }
 
 # Generate a random password

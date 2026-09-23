@@ -21,6 +21,16 @@ setup_domain() {
     local domain="$1"
     local ip="${2:-127.0.0.1}"
     local entry="address=/.$domain/$ip"
+
+    # Both end up in root-written paths and a sed pattern, so validate them
+    if [[ ! "$domain" =~ ^[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*$ ]]; then
+        echo "Skipping invalid domain: $domain"
+        return
+    fi
+    if [[ ! "$ip" =~ ^[0-9]{1,3}(\.[0-9]{1,3}){3}$ ]]; then
+        echo "Skipping $domain: invalid IP $ip"
+        return
+    fi
     
     # Add to dnsmasq config if not already present
     if ! grep -qxF "$entry" "$DNSMASQ_CONF_FILE"; then
