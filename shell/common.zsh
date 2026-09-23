@@ -25,6 +25,10 @@ setopt PUSHD_IGNORE_DUPS
 
 # Completion
 setopt COMPLETE_ALIASES
+# Case-insensitive, then partial-word and substring matches (deve<Tab> -> Developer),
+# as oh-my-zsh does on macOS; menu select lets arrows pick from the list.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select
 
 # Up/down search history by the typed prefix
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
