@@ -6,11 +6,20 @@ return {
     end
   },
   {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    opts = {
+      ensure_installed = { "google-java-format", "stylua", "prettier" },
+    },
+  },
+  {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "lemminx", "vue_ls", "ts_ls" },
+        ensure_installed = { "lua_ls", "lemminx", "vue_ls", "ts_ls", "jdtls" },
+        -- nvim-jdtls starts jdtls from ftplugin/java.lua
+        automatic_enable = { exclude = { "jdtls" } },
       })
     end
   },
@@ -70,6 +79,9 @@ return {
       -- If you are not on most recent `nvim-lspconfig` or you want to override
       local vue_ls_config = {
         on_init = function(client)
+          -- Disable formatting to prevent unwanted auto-formatting
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
           client.handlers['tsserver/request'] = function(_, result, context)
             local clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = 'vtsls' })
             if #clients == 0 then
@@ -107,7 +119,13 @@ return {
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
       vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
-      vim.keymap.set({ 'n', 'v' }, '<leader>cf', vim.lsp.buf.format, { desc = 'Format code' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>cf', function()
+        require('conform').format({
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 1000,
+        })
+      end, { desc = 'Format code' })
 
       -- Diagnostic navigation
       vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })

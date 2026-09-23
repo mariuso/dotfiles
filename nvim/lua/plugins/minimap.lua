@@ -22,14 +22,7 @@ return {
         show_integration_count = true,
       },
     })
-    
-    -- Auto-open minimap
-    vim.api.nvim_create_autocmd('VimEnter', {
-      callback = function()
-        minimap.open()
-      end,
-    })
-    
+
     -- Keybindings
     vim.keymap.set('n', '<leader>mm', minimap.toggle, { desc = 'Toggle minimap' })
     vim.keymap.set('n', '<leader>mr', minimap.refresh, { desc = 'Refresh minimap' })
