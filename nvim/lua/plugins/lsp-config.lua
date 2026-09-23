@@ -17,7 +17,7 @@ return {
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "lemminx", "vue_ls", "ts_ls", "jdtls" },
+        ensure_installed = { "lua_ls", "lemminx", "vue_ls", "vtsls", "jdtls" },
         -- nvim-jdtls starts jdtls from ftplugin/java.lua
         automatic_enable = { exclude = { "jdtls" } },
       })
@@ -26,13 +26,10 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      -- Configure LSP servers directly
-      --require("lspconfig").lua_ls.setup({})
-      local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({})
+      -- lua_ls and the other mason-lspconfig servers are enabled automatically
 
       -- Configure LemMinX for XML/XSLT files
-      lspconfig.lemminx.setup({
+      vim.lsp.config('lemminx', {
         filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
         settings = {
           xml = {
@@ -74,9 +71,6 @@ return {
         },
         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
       }
-      -- If you are on most recent `nvim-lspconfig`
-      local vue_ls_coonfig = {}
-      -- If you are not on most recent `nvim-lspconfig` or you want to override
       local vue_ls_config = {
         on_init = function(client)
           -- Disable formatting to prevent unwanted auto-formatting
@@ -128,8 +122,10 @@ return {
       end, { desc = 'Format code' })
 
       -- Diagnostic navigation
-      vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
-      vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
+      vim.keymap.set('n', '<leader>dn', function() vim.diagnostic.jump({ count = 1, float = true }) end,
+        { desc = 'Next diagnostic' })
+      vim.keymap.set('n', '<leader>dp', function() vim.diagnostic.jump({ count = -1, float = true }) end,
+        { desc = 'Previous diagnostic' })
       vim.keymap.set('n', '<leader>dl', vim.diagnostic.open_float, { desc = 'Show diagnostic' })
 
       -- XSLT development keybindings
