@@ -85,3 +85,5 @@ setopt COMPLETE_ALIASES
 # Custom key bindings
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"

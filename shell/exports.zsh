@@ -65,3 +65,6 @@ export PERSONAL_DIR="$HOME/Developer/Private"
 
 # SOPS (secrets management)
 export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+
+# Claude Code
+export PATH="$HOME/.local/bin:$PATH"
