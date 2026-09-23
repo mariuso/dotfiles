@@ -23,6 +23,7 @@ CONFIG_MAPPINGS=(
     "$HOME/.terraformrc|Terraform Config"
     "$HOME/.config/op/config|1Password CLI Config"
     "$HOME/.npmrc|NPM Config"
+    "$HOME/.config/sops/age/keys.txt|SOPS Age Keys"
     "$DOTFILES_DIR/starship/starship_gcloud_aliases.toml.template|Starship GCloud Aliases Template"
 )
 
@@ -92,7 +93,7 @@ sync_config_from_1password() {
     op document get "$item_title" --vault="$VAULT_NAME" --output="$file_path"
     
     # Set restrictive permissions for sensitive files
-    if [[ "$file_path" == *".ssh/"* ]] || [[ "$file_path" == *"credentials"* ]]; then
+    if [[ "$file_path" == *".ssh/"* ]] || [[ "$file_path" == *"credentials"* ]] || [[ "$file_path" == *"sops/age/keys"* ]]; then
         chmod 600 "$file_path"
     else
         chmod 644 "$file_path"

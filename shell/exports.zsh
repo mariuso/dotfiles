@@ -62,3 +62,6 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 export DEV_DIR="$HOME/Developer"
 export WORK_DIR="$HOME/Developer/Work"
 export PERSONAL_DIR="$HOME/Developer/Private"
+
+# SOPS (secrets management)
+export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
