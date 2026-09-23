@@ -1,6 +1,5 @@
 .DS_Store
-BREWFILE
-BREWFILE.lock.json
+Brewfile.lock.json
 BrewfileCurrent
 
 # Exclude the actual dnsmasq.sh file (keep only the template)
