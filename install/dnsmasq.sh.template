@@ -48,7 +48,7 @@ setup_domain() {
 
 # Create directories if needed
 if sudo [ ! -d "$(brew --prefix)/etc/" ]; then
-    mkdir -pv $(brew --prefix)/etc/
+    mkdir -pv "$(brew --prefix)/etc/"
 fi
 
 if sudo [ ! -d /etc/resolver ]; then

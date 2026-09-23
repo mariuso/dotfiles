@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ShellCheck
+        run: git ls-files -z '*.sh' '*.sh.template' | xargs -0 shellcheck -s bash -S warning
+
+      - name: Zsh syntax
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq zsh
+          for f in shell/.zshrc shell/.zshrc.linux shell/*.zsh; do
+            zsh -n "$f"
+          done
+
+  neovim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Neovim
+        run: |
+          curl -fsSL https://github.com/neovim/neovim/releases/download/v0.11.2/nvim-linux-x86_64.tar.gz | tar xz -C /opt
+          echo /opt/nvim-linux-x86_64/bin >> "$GITHUB_PATH"
+
+      - name: Install plugins from lazy-lock.json
+        run: |
+          mkdir -p ~/.config
+          ln -s "$GITHUB_WORKSPACE/nvim" ~/.config/nvim
+          nvim --headless "+Lazy! restore" +qa
+
+      - name: Load config without errors
+        run: |
+          out=$(nvim --headless "+lua vim.defer_fn(function() vim.cmd('qa') end, 2000)" 2>&1)
+          echo "$out"
+          if echo "$out" | grep -qiE 'error|E[0-9]+:'; then exit 1; fi

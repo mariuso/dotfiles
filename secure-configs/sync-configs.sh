@@ -141,7 +141,8 @@ list_configs() {
         local item_title="${mapping#*|}"
         
         if op item get "$item_title" --vault="$VAULT_NAME" &>/dev/null; then
-            local modified=$(op item get "$item_title" --vault="$VAULT_NAME" --format=json | jq -r '.updated_at')
+            local modified
+            modified=$(op item get "$item_title" --vault="$VAULT_NAME" --format=json | jq -r '.updated_at')
             echo "  ✅ $item_title (modified: $modified)"
         else
             echo "  ❌ $item_title (not found)"

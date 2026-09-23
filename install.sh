@@ -255,7 +255,8 @@ main() {
     fi
     
     # Run selected phases
-    local start_time=$(date +%s)
+    local start_time
+    start_time=$(date +%s)
     local failed_phases=()
     
     for phase in "${phases_to_run[@]}"; do
@@ -270,7 +271,8 @@ main() {
     done
     
     # Show summary
-    local end_time=$(date +%s)
+    local end_time
+    end_time=$(date +%s)
     local duration=$((end_time - start_time))
     
     echo ""

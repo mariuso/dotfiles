@@ -124,7 +124,8 @@ create_symlink() {
     
     # Backup existing file/symlink
     if [[ -e "$target" || -L "$target" ]]; then
-        local backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
+        local backup
+        backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
         warning "Backing up existing file: $target -> $backup"
         mv "$target" "$backup"
     fi
@@ -193,7 +194,8 @@ brew_cask_install() {
 
 # Cleanup function
 cleanup() {
-    local end_time=$(date +%s)
+    local end_time
+    end_time=$(date +%s)
     local duration=$((end_time - SCRIPT_START_TIME))
     
     echo ""

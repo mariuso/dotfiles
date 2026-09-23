@@ -149,6 +149,8 @@ brew "ripgrep"
 brew "saxon"
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
 # Editor of encrypted files
 brew "sops"
 # CLI tools supporting SpatiaLite
