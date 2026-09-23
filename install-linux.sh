@@ -5,7 +5,7 @@
 # installed by the host's provisioning;
 # this only links configuration. Safe to re-run; replaced files are backed up.
 #
-#   git clone git@github.com:mariuso/dotfiles.git ~/.dotfiles
+#   git clone https://github.com/mariuso/dotfiles.git ~/.dotfiles
 #   ~/.dotfiles/install-linux.sh
 set -euo pipefail
 

@@ -5,7 +5,7 @@ Automated macOS development environment setup with secure configuration sync.
 ## ⚡ Quick Start (New Mac)
 
 ```bash
-git clone git@github.com:mariusoseth/.dotfiles.git ~/.dotfiles
+git clone https://github.com/mariuso/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./quick-install.sh
 ```
@@ -13,7 +13,6 @@ cd ~/.dotfiles
 This single command will:
 - ✅ Install Xcode Command Line Tools
 - ✅ Install Homebrew
-- ✅ Clone this dotfiles repository
 - ✅ Install all packages and applications
 - ✅ Configure shell environment (zsh with starship prompt)
 - ✅ Set up development tools
@@ -52,7 +51,7 @@ sync-configs list
 
 ### Applications
 - **Terminals**: iTerm2, Ghostty
-- **Editors**: VS Code (with extensions), Neovim
+- **Editors**: VS Code, Neovim
 - **Productivity**: Alfred, Maccy, Arc browser, Spotify
 - **Cloud Storage**: Transmit
 - **Security**: 1Password
@@ -60,7 +59,7 @@ sync-configs list
 ### Shell Environment
 - **Shell**: Zsh with custom configuration
 - **Prompt**: Starship prompt
-- **Enhancements**: Auto-suggestions, syntax highlighting
+- **Enhancements**: Auto-suggestions, prefix history search
 - **Aliases**: Extensive collection for productivity
 
 ## 🛠️ Manual Installation
@@ -69,7 +68,7 @@ If you prefer step-by-step installation:
 
 ```bash
 # Clone the repository
-git clone https://github.com/mariusoseth/.dotfiles.git ~/.dotfiles
+git clone https://github.com/mariuso/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 
 # Run full installation
@@ -80,12 +79,23 @@ cd ~/.dotfiles
 ./install.sh --list  # See available phases
 ```
 
+## 🐧 Linux Hosts
+
+On a Linux machine (e.g. a remote dev VM), only the portable configs are
+linked; programs are expected to be installed by the host's provisioning:
+
+```bash
+git clone https://github.com/mariuso/dotfiles.git ~/.dotfiles
+~/.dotfiles/install-linux.sh
+```
+
 ## 📁 Repository Structure
 
 ```
 .dotfiles/
 ├── install-remote.sh       # One-liner installer
-├── install.sh             # Main installation script
+├── install.sh             # Main installation script (macOS)
+├── install-linux.sh       # Link portable configs on Linux hosts
 ├── Brewfile               # Homebrew packages and apps
 ├── install/               # Modular installation scripts
 │   ├── 00-prerequisites.sh
@@ -100,10 +110,15 @@ cd ~/.dotfiles
 │   ├── setup-machine.sh   # New machine setup
 │   └── README.md          # Secure sync documentation
 ├── shell/                 # Shell configuration
-│   ├── .zshrc
+│   ├── .zshrc             # macOS
+│   ├── .zshrc.linux       # Linux
+│   ├── common.zsh         # Shared by both
 │   ├── aliases.zsh
-│   ├── exports.zsh
+│   ├── exports.zsh        # macOS environment
 │   └── functions.zsh
+├── nvim/                  # Neovim configuration
+├── starship/              # Starship prompt (+ private GCloud aliases)
+├── ghostty/               # Ghostty terminal
 ├── ssh/                   # SSH configuration
 │   └── config.template
 ├── dnsmasq/              # Local DNS configuration
@@ -162,7 +177,8 @@ CONFIG_MAPPINGS+=("$HOME/.myapp/config|My App Config")
 Edit files in `shell/` directory:
 - `aliases.zsh` - Command shortcuts
 - `functions.zsh` - Custom shell functions  
-- `exports.zsh` - Environment variables
+- `exports.zsh` - macOS environment variables
+- `common.zsh` - Settings shared with Linux
 
 ### dnsmasq Configuration
 Local development domains setup:
@@ -174,7 +190,7 @@ Local development domains setup:
    ```bash
    cp dnsmasq/domains.txt.example dnsmasq/domains.txt
    ```
-3. Edit `dnsmasq/domains.txt` with your domains (one per line)
+3. Edit `dnsmasq/domains.txt` with your domains (one per line, optionally followed by an IP)
 
 ## 📄 License
 

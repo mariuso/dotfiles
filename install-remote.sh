@@ -1,6 +1,6 @@
 #!/bin/bash
 # One-liner installer for dotfiles
-# Usage: curl -fsSL https://raw.githubusercontent.com/yourusername/dotfiles/main/install-remote.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/mariuso/dotfiles/main/install-remote.sh | bash
 
 set -euo pipefail
 
@@ -12,7 +12,10 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="git@github.com:mariusoseth/.dotfiles.git"
+# Clone over HTTPS (the repo is public, so no SSH key is needed yet), then
+# switch the remote to SSH for pushing via the 1Password SSH agent
+REPO_URL="https://github.com/mariuso/dotfiles.git"
+PUSH_URL="git@github.com:mariuso/dotfiles.git"
 DOTFILES_DIR="$HOME/.dotfiles"
 TEMP_DIR="/tmp/dotfiles-install-$$"
 
@@ -81,20 +84,9 @@ clone_dotfiles() {
         mv "$DOTFILES_DIR" "${DOTFILES_DIR}.backup.$(date +%Y%m%d-%H%M%S)"
     fi
     
-    # Check if SSH key exists for private repo
-    if [[ ! -f "$HOME/.ssh/id_ed25519" ]] && [[ ! -f "$HOME/.ssh/id_rsa" ]]; then
-        error "SSH key not found. Private repository access requires SSH key."
-        echo ""
-        echo "Please:"
-        echo "1. Generate an SSH key: ssh-keygen -t ed25519 -C 'your_email@example.com'"
-        echo "2. Add it to GitHub: cat ~/.ssh/id_ed25519.pub"
-        echo "3. Run this installer again"
-        exit 1
-    fi
-    
-    # Clone the repository
     git clone "$REPO_URL" "$DOTFILES_DIR"
     cd "$DOTFILES_DIR"
+    git remote set-url origin "$PUSH_URL"
     
     success "✅ Dotfiles cloned to $DOTFILES_DIR"
 }

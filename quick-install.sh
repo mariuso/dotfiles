@@ -11,7 +11,7 @@ echo ""
 # Check if we're in the dotfiles directory
 if [[ ! -f "install.sh" ]]; then
     echo "❌ Please run this from the dotfiles directory"
-    echo "First clone the repo: git clone git@github.com:mariusoseth/.dotfiles.git ~/.dotfiles"
+    echo "First clone the repo: git clone https://github.com/mariuso/dotfiles.git ~/.dotfiles"
     exit 1
 fi
 
