@@ -15,13 +15,18 @@ DNSMASQ_CONF_FILE=$(brew --prefix)/etc/dnsmasq.conf
 DEFAULT_DOMAINS=("test")
 
 # Function to setup a domain
+# Optional second argument: the IP to resolve to (default 127.0.0.1), e.g. a
+# Tailscale IP for a remote dev VM. Changing the IP replaces the old entry.
 setup_domain() {
     local domain="$1"
+    local ip="${2:-127.0.0.1}"
+    local entry="address=/.$domain/$ip"
     
     # Add to dnsmasq config if not already present
-    if sudo [ $(grep -L "address=/.$domain/127.0.0.1" "$DNSMASQ_CONF_FILE") ]; then
-        echo "address=/.$domain/127.0.0.1" >> "$DNSMASQ_CONF_FILE"
-        echo "Added $domain to dnsmasq configuration"
+    if ! grep -qxF "$entry" "$DNSMASQ_CONF_FILE"; then
+        sed -i '' "\|^address=/\.$domain/|d" "$DNSMASQ_CONF_FILE"
+        echo "$entry" >> "$DNSMASQ_CONF_FILE"
+        echo "Added $domain -> $ip to dnsmasq configuration"
     fi
     
     # Create resolver file
@@ -53,20 +58,20 @@ done
 if [[ -f "$DNSMASQ_CONFIG_FILE" ]]; then
     echo "Loading custom domains from config file..."
     
-    # Read domains from text file (one domain per line)
+    # Read domains from text file: "domain" or "domain ip", one per line
     CUSTOM_DOMAINS=()
-    while IFS= read -r domain || [ -n "$domain" ]; do
+    while IFS= read -r line || [ -n "$line" ]; do
         # Trim whitespace and skip empty lines or comments
-        domain=$(echo "$domain" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-        if [[ -n "$domain" && ! "$domain" =~ ^# ]]; then
-            CUSTOM_DOMAINS+=("$domain")
+        line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+        if [[ -n "$line" && ! "$line" =~ ^# ]]; then
+            CUSTOM_DOMAINS+=("$line")
         fi
     done < "$DNSMASQ_CONFIG_FILE"
     
     if [[ ${#CUSTOM_DOMAINS[@]} -gt 0 ]]; then
         echo "Found ${#CUSTOM_DOMAINS[@]} custom domains"
-        for domain in "${CUSTOM_DOMAINS[@]}"; do
-            setup_domain "$domain"
+        for line in "${CUSTOM_DOMAINS[@]}"; do
+            setup_domain $line
         done
     else
         echo "No custom domains found in config file"

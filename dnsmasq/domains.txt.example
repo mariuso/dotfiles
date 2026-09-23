@@ -9,3 +9,5 @@ api.test
 # You can add more domains below:
 # staging.dev
 # backend.local
+# Optionally give an IP (default 127.0.0.1), e.g. a remote dev VM on the tailnet:
+# myapp.test 100.x.y.z
