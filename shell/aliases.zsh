@@ -27,7 +27,7 @@ alias glog='git log --oneline --graph --decorate'
 
 # Docker shortcuts
 alias d='docker'
-alias dc='docker-compose'
+alias dc='docker compose'
 alias dps='docker ps'
 alias di='docker images'
 alias drm='docker rm'
@@ -56,7 +56,7 @@ alias tfd='terraform destroy'
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
-alias oldvim='vim'
+alias oldvim='command vim'
 alias python='python3'
 alias pip='pip3'
 

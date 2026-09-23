@@ -1,8 +1,9 @@
-# Environment Variables and Exports
-# Path configuration and environment setup
+# Environment Variables and Exports (macOS)
+# Shared exports (editor, history, ~/.local/bin) live in common.zsh
 
 # Homebrew
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+export HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/opt/homebrew}"
+export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
 
 # mise-en-place version manager
 if command -v mise >/dev/null 2>&1; then
@@ -10,21 +11,17 @@ if command -v mise >/dev/null 2>&1; then
 fi
 
 # Java configuration
-export JAVA_HOME="$(brew --prefix)/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
-export CPPFLAGS="-I$(brew --prefix)/opt/openjdk@21/include"
-export PATH="$(brew --prefix)/opt/openjdk@21/bin:$PATH"
+export JAVA_HOME="$HOMEBREW_PREFIX/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
+export CPPFLAGS="-I$HOMEBREW_PREFIX/opt/openjdk@21/include"
+export PATH="$HOMEBREW_PREFIX/opt/openjdk@21/bin:$PATH"
 
 # MySQL client
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+export PATH="$HOMEBREW_PREFIX/opt/mysql-client/bin:$PATH"
 
 # LibXML2
-export PATH="/opt/homebrew/opt/libxml2/bin:$PATH"
-
-# Python user packages
-export PATH="$PATH:$HOME/Library/Python/3.9/lib/python/site-packages"
+export PATH="$HOMEBREW_PREFIX/opt/libxml2/bin:$PATH"
 
 # Go
-export PATH="$(go env GOPATH)/bin:$PATH" 2>/dev/null || true
 export PATH="$PATH:$HOME/go/bin"
 
 # pnpm
@@ -39,32 +36,18 @@ if command -v rbenv >/dev/null 2>&1; then
     eval "$(rbenv init -)"
 fi
 
-# Editor preferences
-export EDITOR='nvim'
-export VISUAL='nvim'
-
-# History configuration
-export HISTSIZE=10000
-export SAVEHIST=10000
-export HISTFILE="$HOME/.zsh_history"
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # Colored man pages
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
-# Less configuration
-export LESS='-R'
-export LESSOPEN='|~/.lessfilter %s'
 
 # Disable macOS session restore warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # Development directories
-export DEV_DIR="$HOME/Developer"
 export WORK_DIR="$HOME/Developer/Work"
 export PERSONAL_DIR="$HOME/Developer/Private"
 
 # SOPS (secrets management)
 export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
-
-# Claude Code
-export PATH="$HOME/.local/bin:$PATH"

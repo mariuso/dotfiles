@@ -89,11 +89,6 @@ ff() {
     find . -type f -name "*$1*" 2>/dev/null
 }
 
-# Quick directory search
-fd() {
-    find . -type d -name "*$1*" 2>/dev/null
-}
-
 # Git clone and cd
 gclone() {
     git clone "$1" && cd "$(basename "$1" .git)"
