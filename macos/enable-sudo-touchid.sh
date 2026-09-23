@@ -31,14 +31,14 @@ else
 	
 	# Running macOS Ventura or lower
 
-	cp /etc/pam.d/sudo /etc/pam.d/sudo.backup
+	# The pam_tid.so line does not exist here, so add it after the first line
+	if ! grep -q pam_tid.so /etc/pam.d/sudo; then
+		sudo cp /etc/pam.d/sudo /etc/pam.d/sudo.backup
+		sudo sed -i '' '1a\
+auth       sufficient     pam_tid.so
+' /etc/pam.d/sudo
+	fi
 
-# in macOS Ventura and lower the pam_tid.so line does not exist so we must add it after the first comment line.
- 
-sed -i '' "/\#/a\ 
-auth       sufficient     pam_tid.so\\
-" /etc/pam.d/sudo
-	
 fi
 
 exit 0

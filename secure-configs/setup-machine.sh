@@ -105,7 +105,7 @@ verify_setup() {
         success "✅ SSH config present"
     else
         warning "❌ SSH config missing"
-        ((issues++))
+        issues=$((issues + 1))
     fi
     
     # Check 1Password CLI
@@ -113,7 +113,7 @@ verify_setup() {
         success "✅ 1Password CLI authenticated"
     else
         warning "❌ 1Password CLI not authenticated"
-        ((issues++))
+        issues=$((issues + 1))
     fi
     
     # Check critical directories
@@ -123,7 +123,7 @@ verify_setup() {
             success "✅ Directory exists: $dir"
         else
             warning "❌ Directory missing: $dir"
-            ((issues++))
+            issues=$((issues + 1))
         fi
     done
     

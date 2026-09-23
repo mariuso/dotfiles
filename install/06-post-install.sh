@@ -89,11 +89,11 @@ verify_installation() {
         local tool="${tool_info%%:*}"
         local name="${tool_info##*:}"
         
-        ((checks_total++))
+        checks_total=$((checks_total + 1))
         
         if command_exists "$tool"; then
             success "✓ $name is installed"
-            ((checks_passed++))
+            checks_passed=$((checks_passed + 1))
         else
             error "✗ $name is not installed or not in PATH"
         fi
@@ -111,11 +111,11 @@ verify_installation() {
         local config="${config_info%%:*}"
         local name="${config_info##*:}"
         
-        ((checks_total++))
+        checks_total=$((checks_total + 1))
         
         if [[ -f "$config" || -L "$config" ]]; then
             success "✓ $name is linked"
-            ((checks_passed++))
+            checks_passed=$((checks_passed + 1))
         else
             error "✗ $name is missing"
         fi

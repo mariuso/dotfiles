@@ -84,7 +84,7 @@ setup_asdf_plugin() {
     # Install latest version
     info "Installing latest $plugin..."
     run_cmd "asdf install $plugin latest"
-    run_cmd "asdf global $plugin latest"
+    run_cmd "asdf set --home $plugin latest"
     
     success "$plugin setup completed"
 }
@@ -96,8 +96,7 @@ setup_mise_plugin() {
     
     # Install latest version
     info "Installing latest $plugin with mise..."
-    run_cmd "mise install $plugin@latest"
-    run_cmd "mise global $plugin@latest"
+    run_cmd "mise use --global $plugin@latest"
     
     success "$plugin setup completed"
 }
