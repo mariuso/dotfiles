@@ -1,0 +1,5 @@
+# GCloud project aliases for the starship prompt.
+# Copy to starship_gcloud_aliases.toml (gitignored, synced via 1Password)
+# and run starship/rebuild-config.sh.
+[gcloud.project_aliases]
+"my-company-project-prod" = "prod"

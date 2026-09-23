@@ -1,13 +1,15 @@
 #!/bin/bash
 # Process GCloud aliases into starship configuration
-# Merges gcloud project aliases from template into main starship.toml
+# Merges the private gcloud project aliases into a generated, gitignored
+# starship.local.toml, leaving the tracked starship.toml untouched.
 
 set -euo pipefail
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STARSHIP_CONFIG="$SCRIPT_DIR/starship.toml"
-ALIASES_TEMPLATE="$SCRIPT_DIR/starship_gcloud_aliases.toml.template"
+OUTPUT_CONFIG="$SCRIPT_DIR/starship.local.toml"
+ALIASES_TEMPLATE="$SCRIPT_DIR/starship_gcloud_aliases.toml"
 PLACEHOLDER="# GCLOUD_PROJECT_ALIASES_PLACEHOLDER"
 
 # Import utilities
@@ -21,8 +23,9 @@ check_files() {
     fi
     
     if [[ ! -f "$ALIASES_TEMPLATE" ]]; then
-        warning "GCloud aliases template not found: $ALIASES_TEMPLATE"
+        warning "GCloud aliases not found: $ALIASES_TEMPLATE"
         info "Proceeding without gcloud aliases"
+        cp "$STARSHIP_CONFIG" "$OUTPUT_CONFIG"
         return 1
     fi
     
@@ -53,8 +56,7 @@ process_aliases() {
         fi
     done < "$STARSHIP_CONFIG"
     
-    # Move processed file back
-    mv "$temp_file" "$STARSHIP_CONFIG"
+    mv "$temp_file" "$OUTPUT_CONFIG"
     
     success "✅ GCloud aliases processed successfully"
     
@@ -79,10 +81,11 @@ Options:
 
 Files:
     Config:   $STARSHIP_CONFIG
-    Template: $ALIASES_TEMPLATE
-    
-The script replaces the placeholder '$PLACEHOLDER' 
-in the starship config with the contents of the aliases template.
+    Aliases:  $ALIASES_TEMPLATE
+    Output:   $OUTPUT_CONFIG
+
+The script writes the starship config to the output file, replacing the
+placeholder '$PLACEHOLDER' with the contents of the aliases file.
 EOF
 }
 

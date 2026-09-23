@@ -61,13 +61,10 @@ setup_app_configs() {
 
     # Starship configuration
     ensure_dir "$HOME/.config"
-    create_symlink "$dotfiles_dir/starship/starship.toml" "$HOME/.config/starship.toml"
-    
-    # Process GCloud aliases for starship
-    if [[ -x "$dotfiles_dir/starship/process-gcloud-aliases.sh" ]]; then
-        info "Processing GCloud aliases for starship..."
-        "$dotfiles_dir/starship/process-gcloud-aliases.sh"
-    fi
+    # Generate starship.local.toml (starship.toml plus private GCloud aliases)
+    info "Processing GCloud aliases for starship..."
+    "$dotfiles_dir/starship/process-gcloud-aliases.sh"
+    create_symlink "$dotfiles_dir/starship/starship.local.toml" "$HOME/.config/starship.toml"
 
     # Ghostty configuration
     ensure_dir "$HOME/.config/ghostty"

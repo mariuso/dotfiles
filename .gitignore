@@ -8,3 +8,9 @@ install/dnsmasq.sh
 
 # Exclude custom dnsmasq domains (keep only the example)
 dnsmasq/domains.txt
+# Private GCloud project aliases and the starship config generated from them
+starship/starship_gcloud_aliases.toml
+starship/starship.local.toml
+
+# Local Claude Code settings
+.claude/settings.local.json

@@ -29,8 +29,8 @@ symbol = "☁️ "
 style = "bg:#fb4934 fg:#282828"
 format = '[ $symbol$account/$project ]($style)'
 
-[gcloud.project_aliases]
-"my-company-project-prod" = "prod"
+# GCLOUD_PROJECT_ALIASES_PLACEHOLDER
+
 [kubernetes]
 style = "bg:#fe8019 fg:#282828"
 format = '[ $symbol$context( \($namespace\)) ]($style)'
