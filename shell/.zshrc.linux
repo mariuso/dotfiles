@@ -1,0 +1,61 @@
+# Zsh configuration for Linux hosts (e.g. a remote dev VM).
+# Linked as ~/.zshrc by install-linux.sh. The macOS .zshrc and exports.zsh
+# assume Homebrew, so this reuses only the portable pieces: aliases, functions,
+# starship, nvim.
+
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR='nvim'
+export VISUAL='nvim'
+export LESS='-R'
+export DEV_DIR="$HOME/Developer"
+
+# History
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTFILE="$HOME/.zsh_history"
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+# Directory navigation
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+
+# Completion
+autoload -Uz compinit && compinit
+setopt COMPLETE_ALIASES
+autoload -Uz colors && colors
+
+# Emacs keys, and up/down search history by the typed prefix
+bindkey -e
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+SHELL_DIR="$HOME/.dotfiles/shell"
+[[ -f "$SHELL_DIR/aliases.zsh" ]] && source "$SHELL_DIR/aliases.zsh"
+[[ -f "$SHELL_DIR/functions.zsh" ]] && source "$SHELL_DIR/functions.zsh"
+
+# Linux overrides for macOS-flavoured aliases and functions
+alias ls='ls --color=auto'
+alias dc='docker compose'
+alias localip="ip -4 addr show tailscale0 | awk '/inet /{print \$2}' | cut -d/ -f1"
+unfunction fd 2>/dev/null        # functions.zsh defines fd(); keep the real tool
+command -v fdfind >/dev/null 2>&1 && alias fd='fdfind'
+ports() { ss -tlnp; }
+
+# mise, if installed
+command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
+
+# Autosuggestions (apt: zsh-autosuggestions)
+[[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] &&
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Starship prompt (must be at the end)
+command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"

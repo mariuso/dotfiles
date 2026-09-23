@@ -51,5 +51,14 @@ Host github.com
     User git
     IdentityFile ~/.ssh/id_ed25519
 
+# Remote dev VM on Tailscale. Use the full MagicDNS name, since short names
+# may not resolve on macOS. ForwardAgent lets git on the VM use the local
+# 1Password SSH agent; no private keys live on the VM.
+Host my-dev-vm
+    HostName my-dev-vm.your-tailnet.ts.net
+    User your-username
+    ForwardAgent yes
+    SetEnv TERM=xterm-256color
+
 # Add your own server configurations below
 # Remember to use 1Password SSH agent or specify IdentityFile paths
