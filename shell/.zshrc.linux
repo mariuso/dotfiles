@@ -22,5 +22,8 @@ command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] &&
     source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# Welcome message on login shells, if installed
+[[ -o login ]] && command -v neofetch >/dev/null 2>&1 && neofetch
+
 # Starship prompt (must be at the end)
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
